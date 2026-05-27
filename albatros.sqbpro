@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Даня/Desktop/praktika 25 05 26/albatros.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2997"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="clients" custom_title="0" dock_id="1" table="4,7:mainclients"/><dock_state state="000000ff00000000fd000000010000000200000774000003c0fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000007740000012e00ffffff000002790000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="agents" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="58"/><column index="2" value="95"/><column index="3" value="70"/><column index="4" value="95"/><column index="5" value="53"/><column index="6" value="95"/><column index="7" value="66"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="branches" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="64"/><column index="2" value="143"/><column index="3" value="143"/><column index="4" value="95"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="clients" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="56"/><column index="2" value="79"/><column index="3" value="70"/><column index="4" value="85"/><column index="5" value="119"/><column index="6" value="95"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">CREATE TABLE IF NOT EXISTS branches (
+    branch_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    address TEXT NOT NULL,
+    phone TEXT
+);
+
+CREATE TABLE IF NOT EXISTS agents (
+    agent_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    last_name TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    middle_name TEXT,
+    address TEXT,
+    phone TEXT,
+    branch_id INTEGER,
+    FOREIGN KEY (branch_id) REFERENCES branches(branch_id)
+);
+
+CREATE TABLE IF NOT EXISTS clients (
+    client_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    last_name TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    middle_name TEXT,
+    address TEXT,
+    phone TEXT
+);
+
+CREATE TABLE IF NOT EXISTS insurance_types (
+    insurance_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    salary_percent REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS contracts (
+    contract_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contract_date DATE NOT NULL,
+    insurance_sum REAL NOT NULL,
+    tariff_rate REAL NOT NULL,
+    client_id INTEGER,
+    agent_id INTEGER,
+    insurance_type_id INTEGER,
+    branch_id INTEGER,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id),
+    FOREIGN KEY (agent_id) REFERENCES agents(agent_id),
+    FOREIGN KEY (insurance_type_id) REFERENCES insurance_types(insurance_type_id),
+    FOREIGN KEY (branch_id) REFERENCES branches(branch_id)
+);
+
+INSERT INTO branches (name, address, phone) VALUES ('Альбатрос Главный', 'ул. Центральная 1', '89001234567');
+INSERT INTO clients (last_name, first_name, middle_name, address, phone) VALUES ('Носа', 'Вова', 'Иванович', 'ул. Пушкина 10', '89111234567');
+INSERT INTO clients (last_name, first_name, middle_name, address, phone) VALUES ('Альбатрос', 'Жора', 'Сергеевич', 'ул. Гагарина 3', '89227654321');
+INSERT INTO insurance_types (name, salary_percent) VALUES ('Страхование жизни', 5.5);
+INSERT INTO insurance_types (name, salary_percent) VALUES ('КАСКО', 3.2);
+INSERT INTO agents (last_name, first_name, middle_name, phone, branch_id) VALUES ('Мигазудинов', 'Олег', 'Викторович', '89111111111', 1);
+INSERT INTO agents (last_name, first_name, middle_name, phone, branch_id) VALUES ('Чегодаев', 'Андрей', 'Анатольевич', '89222222222', 1);
+INSERT INTO contracts (contract_date, insurance_sum, tariff_rate, client_id, agent_id, insurance_type_id, branch_id) VALUES ('2026-05-27', 500000, 0.055, 1, 1, 1, 1);
+INSERT INTO contracts (contract_date, insurance_sum, tariff_rate, client_id, agent_id, insurance_type_id, branch_id) VALUES ('2026-05-27', 300000, 0.032, 2, 2, 2, 1);</sql><current_tab id="0"/></tab_sql></sqlb_project>

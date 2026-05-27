@@ -1,0 +1,703 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Страховая компания Альбатрос</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a3c5e, #2980b9);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header span {
+                font-size: 40px;
+            }
+
+        .nav {
+            background: #1a3c5e;
+            display: flex;
+            gap: 5px;
+            padding: 0 40px;
+        }
+
+            .nav button {
+                background: none;
+                border: none;
+                color: #adc8e6;
+                padding: 12px 20px;
+                cursor: pointer;
+                font-size: 14px;
+                border-bottom: 3px solid transparent;
+            }
+
+                .nav button:hover, .nav button.active {
+                    color: white;
+                    border-bottom: 3px solid #2980b9;
+                }
+
+        .container {
+            padding: 30px 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+            .card h2 {
+                color: #1a3c5e;
+                margin-bottom: 20px;
+                font-size: 18px;
+                border-bottom: 2px solid #2980b9;
+                padding-bottom: 10px;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1a3c5e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 11px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f0f7ff;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+            .form-row input, .form-row select {
+                padding: 9px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 13px;
+                flex: 1;
+                min-width: 150px;
+            }
+
+        .btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+            .btn:hover {
+                background: #1a3c5e;
+            }
+
+        .btn-red {
+            background: #e74c3c;
+        }
+
+            .btn-red:hover {
+                background: #c0392b;
+            }
+
+        .btn-green {
+            background: #27ae60;
+        }
+
+        .salary-box {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+            .salary-box h3 {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .salary-box p {
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+        .page {
+            display: none;
+        }
+
+            .page.active {
+                display: block;
+            }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-top: 4px solid #2980b9;
+        }
+
+            .stat-card .number {
+                font-size: 32px;
+                font-weight: bold;
+                color: #1a3c5e;
+            }
+
+            .stat-card .label {
+                font-size: 13px;
+                color: #777;
+                margin-top: 5px;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span>🦅</span>
+        <div>
+            <h1>Страховая компания «Альбатрос»</h1>
+            <small>🦅🛡️ Застрахуй братуху! 😎✅</small>
+        </div>
+    </div>
+
+    <div class="nav">
+        <button class="active" onclick="showPage('home')">🏠 Главная</button>
+        <button onclick="showPage('clients')">👥 Клиенты</button>
+        <button onclick="showPage('agents')">👔 Агенты</button>
+        <button onclick="showPage('branches')">🏢 Филиалы</button>
+        <button onclick="showPage('types')">📋 Виды страхования</button>
+        <button onclick="showPage('contracts')">📄 Договоры</button>
+        <button onclick="showPage('salary')">💰 Зарплата</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ГЛАВНАЯ -->
+        <div id="home" class="page active">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="number" id="stat-clients">0</div>
+                    <div class="label">Клиентов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="stat-agents">0</div>
+                    <div class="label">Агентов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="stat-contracts">0</div>
+                    <div class="label">Договоров</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="stat-branches">0</div>
+                    <div class="label">Филиалов</div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Последние договоры</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Дата</th>
+                            <th>Клиент</th>
+                            <th>Агент</th>
+                            <th>Вид страхования</th>
+                            <th>Сумма</th>
+                            <th>Платёж</th>
+                        </tr>
+                    </thead>
+                    <tbody id="home-contracts"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- КЛИЕНТЫ -->
+        <div id="clients" class="page">
+            <div class="card">
+                <h2>➕ Добавить клиента</h2>
+                <div class="form-row">
+                    <input id="c-last" placeholder="Фамилия">
+                    <input id="c-first" placeholder="Имя">
+                    <input id="c-mid" placeholder="Отчество">
+                    <input id="c-addr" placeholder="Адрес">
+                    <input id="c-phone" placeholder="Телефон">
+                    <button class="btn btn-green" onclick="addClient()">Добавить</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>👥 Список клиентов</h2>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Адрес</th><th>Телефон</th><th>Действие</th></tr>
+                    </thead>
+                    <tbody id="clients-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- АГЕНТЫ -->
+        <div id="agents" class="page">
+            <div class="card">
+                <h2>➕ Добавить агента</h2>
+                <div class="form-row">
+                    <input id="a-last" placeholder="Фамилия">
+                    <input id="a-first" placeholder="Имя">
+                    <input id="a-mid" placeholder="Отчество">
+                    <input id="a-addr" placeholder="Адрес">
+                    <input id="a-phone" placeholder="Телефон">
+                    <select id="a-branch"><option value="">Филиал</option></select>
+                    <button class="btn btn-green" onclick="addAgent()">Добавить</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>👔 Список агентов</h2>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Телефон</th><th>Филиал</th><th>Действие</th></tr>
+                    </thead>
+                    <tbody id="agents-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ФИЛИАЛЫ -->
+        <div id="branches" class="page">
+            <div class="card">
+                <h2>➕ Добавить филиал</h2>
+                <div class="form-row">
+                    <input id="b-name" placeholder="Название">
+                    <input id="b-addr" placeholder="Адрес">
+                    <input id="b-phone" placeholder="Телефон">
+                    <button class="btn btn-green" onclick="addBranch()">Добавить</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>🏢 Список филиалов</h2>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Название</th><th>Адрес</th><th>Телефон</th><th>Действие</th></tr>
+                    </thead>
+                    <tbody id="branches-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ВИДЫ СТРАХОВАНИЯ -->
+        <div id="types" class="page">
+            <div class="card">
+                <h2>➕ Добавить вид страхования</h2>
+                <div class="form-row">
+                    <input id="t-name" placeholder="Название">
+                    <input id="t-percent" placeholder="Процент зарплаты" type="number">
+                    <button class="btn btn-green" onclick="addType()">Добавить</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>📋 Виды страхования</h2>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Название</th><th>% зарплаты</th><th>Действие</th></tr>
+                    </thead>
+                    <tbody id="types-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ДОГОВОРЫ -->
+        <div id="contracts" class="page">
+            <div class="card">
+                <h2>➕ Добавить договор</h2>
+                <div class="form-row">
+                    <input id="con-date" type="date">
+                    <input id="con-sum" placeholder="Страховая сумма" type="number">
+                    <input id="con-rate" placeholder="Тарифная ставка" type="number" step="0.001">
+                    <select id="con-client"><option value="">Клиент</option></select>
+                    <select id="con-agent"><option value="">Агент</option></select>
+                    <select id="con-type"><option value="">Вид страхования</option></select>
+                    <select id="con-branch"><option value="">Филиал</option></select>
+                    <button class="btn btn-green" onclick="addContract()">Добавить</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>📄 Список договоров</h2>
+                <table>
+                    <thead>
+                        <tr><th>№</th><th>Дата</th><th>Клиент</th><th>Агент</th><th>Вид</th><th>Сумма</th><th>Ставка</th><th>Платёж</th><th>Действие</th></tr>
+                    </thead>
+                    <tbody id="contracts-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ЗАРПЛАТА -->
+        <div id="salary" class="page">
+            <div class="card">
+                <h2>💰 Расчёт зарплаты агентов</h2>
+                <div class="form-row">
+                    <select id="sal-agent"><option value="">Выберите агента</option></select>
+                    <button class="btn" onclick="calcSalary()">Рассчитать</button>
+                </div>
+                <div id="salary-result"></div>
+            </div>
+            <div class="card">
+                <h2>📊 Зарплата всех агентов</h2>
+                <table>
+                    <thead>
+                        <tr><th>Агент</th><th>Договоров</th><th>Сумма платежей</th><th>Зарплата</th></tr>
+                    </thead>
+                    <tbody id="salary-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+const API = 'https://localhost:7082/api';
+function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(name).classList.add('active');
+    event.target.classList.add('active');
+    loadPage(name);
+}
+
+async function loadPage(name) {
+    if (name === 'home') loadHome();
+    if (name === 'clients') loadClients();
+    if (name === 'agents') loadAgents();
+    if (name === 'branches') loadBranches();
+    if (name === 'types') loadTypes();
+    if (name === 'contracts') loadContracts();
+    if (name === 'salary') loadSalary();
+}
+
+async function get(url) {
+    const r = await fetch(API + url);
+    return r.json();
+}
+
+async function post(url, data) {
+    const r = await fetch(API + url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    return r.json();
+}
+
+async function del(url) {
+    const response = await fetch(API + url, { method: 'DELETE' });
+    if (!response.ok) {
+        const text = await response.text();
+        alert(text);
+        return false;
+    }
+    return true;
+}
+
+async function loadHome() {
+    const [clients, agents, contracts, branches] = await Promise.all([
+        get('/clients'), get('/agents'), get('/contracts'), get('/branches')
+    ]);
+    document.getElementById('stat-clients').textContent = clients.length;
+    document.getElementById('stat-agents').textContent = agents.length;
+    document.getElementById('stat-contracts').textContent = contracts.length;
+    document.getElementById('stat-branches').textContent = branches.length;
+
+    const tbody = document.getElementById('home-contracts');
+    tbody.innerHTML = contracts.slice(-5).reverse().map(c => `
+        <tr>
+            <td>${c.contractId ?? c.contract_id}</td>
+            <td>${(c.contractDate ?? c.contract_date)?.split('T')[0]}</td>
+            <td>${c.client ? (c.client.lastName ?? c.client.last_name) + ' ' + (c.client.firstName ?? c.client.first_name) : '-'}</td>
+            <td>${c.agent ? (c.agent.lastName ?? c.agent.last_name) + ' ' + (c.agent.firstName ?? c.agent.first_name) : '-'}</td>
+            <td>${c.insuranceType ? c.insuranceType.name : '-'}</td>
+            <td>${(c.insuranceSum ?? c.insurance_sum)?.toLocaleString()} ₸</td>
+            <td>${((c.insuranceSum ?? c.insurance_sum) * (c.tariffRate ?? c.tariff_rate))?.toLocaleString()} ₸</td>
+        </tr>`).join('');
+        }
+async function loadClients() {
+    const data = await get('/clients');
+    document.getElementById('clients-table').innerHTML = data.map(c => `
+        <tr>
+            <td>${c.clientId}</td>
+            <td>${c.lastName}</td>
+            <td>${c.firstName}</td>
+            <td>${c.middleName || '-'}</td>
+            <td>${c.address || '-'}</td>
+            <td>${c.phone || '-'}</td>
+            <td><button class="btn btn-red" onclick="deleteClient(${c.clientId})">Удалить</button></td>
+        </tr>`).join('');
+}
+
+async function addClient() {
+    await post('/clients', {
+        lastName: document.getElementById('c-last').value,
+        firstName: document.getElementById('c-first').value,
+        middleName: document.getElementById('c-mid').value,
+        address: document.getElementById('c-addr').value,
+        phone: document.getElementById('c-phone').value
+    });
+    loadClients();
+}
+
+async function deleteClient(id) {
+    await del('/clients/' + id);
+    loadClients();
+}
+
+async function loadBranches() {
+    const data = await get('/branches');
+    document.getElementById('branches-table').innerHTML = data.map(b => `
+        <tr>
+            <td>${b.branchId}</td>
+            <td>${b.name}</td>
+            <td>${b.address}</td>
+            <td>${b.phone || '-'}</td>
+            <td><button class="btn btn-red" onclick="deleteBranch(${b.branchId})">Удалить</button></td>
+        </tr>`).join('');
+
+    const sel = document.getElementById('a-branch');
+    if (sel) sel.innerHTML = '<option value="">Филиал</option>' +
+        data.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
+
+    const sel2 = document.getElementById('con-branch');
+    if (sel2) sel2.innerHTML = '<option value="">Филиал</option>' +
+        data.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
+}
+
+async function addBranch() {
+    await post('/branches', {
+        name: document.getElementById('b-name').value,
+        address: document.getElementById('b-addr').value,
+        phone: document.getElementById('b-phone').value
+    });
+    loadBranches();
+}
+
+async function deleteBranch(id) {
+    await del('/branches/' + id);
+    loadBranches();
+}
+
+async function loadAgents() {
+    const [agents, branches] = await Promise.all([get('/agents'), get('/branches')]);
+
+    document.getElementById('agents-table').innerHTML = agents.map(a => `
+        <tr>
+            <td>${a.agentId}</td>
+            <td>${a.lastName}</td>
+            <td>${a.firstName}</td>
+            <td>${a.middleName || '-'}</td>
+            <td>${a.phone || '-'}</td>
+            <td>${a.branch ? a.branch.name : '-'}</td>
+            <td><button class="btn btn-red" onclick="deleteAgent(${a.agentId})">Удалить</button></td>
+        </tr>`).join('');
+
+    const sel = document.getElementById('a-branch');
+    sel.innerHTML = '<option value="">Филиал</option>' +
+        branches.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
+
+    const sel2 = document.getElementById('con-agent');
+    if (sel2) sel2.innerHTML = '<option value="">Агент</option>' +
+        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+
+    const sel3 = document.getElementById('sal-agent');
+    if (sel3) sel3.innerHTML = '<option value="">Выберите агента</option>' +
+        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+}
+
+async function addAgent() {
+    await post('/agents', {
+        lastName: document.getElementById('a-last').value,
+        firstName: document.getElementById('a-first').value,
+        middleName: document.getElementById('a-mid').value,
+        address: document.getElementById('a-addr').value,
+        phone: document.getElementById('a-phone').value,
+        branchId: parseInt(document.getElementById('a-branch').value) || null
+    });
+    loadAgents();
+}
+
+async function deleteAgent(id) {
+    await del('/agents/' + id);
+    loadAgents();
+}
+
+async function loadTypes() {
+    const data = await get('/insurancetypes');
+    document.getElementById('types-table').innerHTML = data.map(t => `
+        <tr>
+            <td>${t.insuranceTypeId}</td>
+            <td>${t.name}</td>
+            <td>${t.salaryPercent}%</td>
+            <td><button class="btn btn-red" onclick="deleteType(${t.insuranceTypeId})">Удалить</button></td>
+        </tr>`).join('');
+
+    const sel = document.getElementById('con-type');
+    if (sel) sel.innerHTML = '<option value="">Вид страхования</option>' +
+        data.map(t => `<option value="${t.insuranceTypeId}">${t.name}</option>`).join('');
+}
+
+async function addType() {
+    await post('/insurancetypes', {
+        name: document.getElementById('t-name').value,
+        salaryPercent: parseFloat(document.getElementById('t-percent').value)
+    });
+    loadTypes();
+}
+
+async function deleteType(id) {
+    await del('/insurancetypes/' + id);
+    loadTypes();
+}
+
+async function loadContracts() {
+    const [contracts, clients, agents, types, branches] = await Promise.all([
+        get('/contracts'), get('/clients'), get('/agents'),
+        get('/insurancetypes'), get('/branches')
+    ]);
+
+    document.getElementById('contracts-table').innerHTML = contracts.map(c => `
+        <tr>
+            <td>${c.contractId}</td>
+            <td>${c.contractDate?.split('T')[0]}</td>
+            <td>${c.client ? c.client.lastName + ' ' + c.client.firstName : '-'}</td>
+            <td>${c.agent ? c.agent.lastName + ' ' + c.agent.firstName : '-'}</td>
+            <td>${c.insuranceType ? c.insuranceType.name : '-'}</td>
+            <td>${c.insuranceSum?.toLocaleString()} ₸</td>
+            <td>${c.tariffRate}</td>
+            <td>${(c.insuranceSum * c.tariffRate).toLocaleString()} ₸</td>
+            <td><button class="btn btn-red" onclick="deleteContract(${c.contractId})">Удалить</button></td>
+        </tr>`).join('');
+
+    document.getElementById('con-client').innerHTML = '<option value="">Клиент</option>' +
+        clients.map(c => `<option value="${c.clientId}">${c.lastName} ${c.firstName}</option>`).join('');
+    document.getElementById('con-agent').innerHTML = '<option value="">Агент</option>' +
+        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+    document.getElementById('con-type').innerHTML = '<option value="">Вид страхования</option>' +
+        types.map(t => `<option value="${t.insuranceTypeId}">${t.name}</option>`).join('');
+    document.getElementById('con-branch').innerHTML = '<option value="">Филиал</option>' +
+        branches.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
+}
+
+async function addContract() {
+    await post('/contracts', {
+        contractDate: document.getElementById('con-date').value,
+        insuranceSum: parseFloat(document.getElementById('con-sum').value),
+        tariffRate: parseFloat(document.getElementById('con-rate').value),
+        clientId: parseInt(document.getElementById('con-client').value) || null,
+        agentId: parseInt(document.getElementById('con-agent').value) || null,
+        insuranceTypeId: parseInt(document.getElementById('con-type').value) || null,
+        branchId: parseInt(document.getElementById('con-branch').value) || null
+    });
+    loadContracts();
+}
+
+async function deleteContract(id) {
+    await del('/contracts/' + id);
+    loadContracts();
+}
+
+async function loadSalary() {
+    const [agents, contracts, types] = await Promise.all([
+        get('/agents'), get('/contracts'), get('/insurancetypes')
+    ]);
+
+    const sel = document.getElementById('sal-agent');
+    sel.innerHTML = '<option value="">Выберите агента</option>' +
+        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+
+    const tbody = document.getElementById('salary-table');
+    tbody.innerHTML = agents.map(agent => {
+        const agentContracts = contracts.filter(c => c.agentId === agent.agentId);
+        let totalSalary = 0;
+        let totalPayment = 0;
+        agentContracts.forEach(c => {
+            const payment = c.insuranceSum * c.tariffRate;
+            const percent = c.insuranceType ? c.insuranceType.salaryPercent / 100 : 0;
+            totalPayment += payment;
+            totalSalary += payment * percent;
+        });
+        return `<tr>
+            <td>${agent.lastName} ${agent.firstName} ${agent.middleName || ''}</td>
+            <td>${agentContracts.length}</td>
+            <td>${totalPayment.toLocaleString()} ₸</td>
+            <td><b>${totalSalary.toLocaleString()} ₸</b></td>
+        </tr>`;
+    }).join('');
+}
+
+async function calcSalary() {
+    const agentId = parseInt(document.getElementById('sal-agent').value);
+    if (!agentId) return;
+
+    const [contracts, agents] = await Promise.all([get('/contracts'), get('/agents')]);
+    const agent = agents.find(a => a.agentId === agentId);
+    const agentContracts = contracts.filter(c => c.agentId === agentId);
+
+    let totalSalary = 0;
+    agentContracts.forEach(c => {
+        const payment = c.insuranceSum * c.tariffRate;
+        const percent = c.insuranceType ? c.insuranceType.salaryPercent / 100 : 0;
+        totalSalary += payment * percent;
+    });
+
+    document.getElementById('salary-result').innerHTML = `
+        <div class="salary-box">
+            <h3>${agent.lastName} ${agent.firstName} ${agent.middleName || ''}</h3>
+            <p>${totalSalary.toLocaleString()} ₸</p>
+            <small>Договоров: ${agentContracts.length}</small>
+        </div>`;
+}
+
+loadHome();
+    </script>
+</body>
+</html>
