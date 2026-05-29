@@ -18,5 +18,8 @@ namespace WebApplication4.Models
 
         [Column("phone")]
         public string? Phone { get; set; }
+
+        [Column("city")]
+        public string City { get; set; } = string.Empty;
     }
 }

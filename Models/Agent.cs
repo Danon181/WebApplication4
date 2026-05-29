@@ -25,6 +25,12 @@ namespace WebApplication4.Models
         [Column("phone")]
         public string? Phone { get; set; }
 
+        [Column("email")]
+        public string? Email { get; set; }
+
+        [Column("base_rate")]
+        public double? BaseRate { get; set; }
+
         [Column("branch_id")]
         public int? BranchId { get; set; }
 

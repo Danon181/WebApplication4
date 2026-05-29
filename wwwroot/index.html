@@ -1,9 +1,72 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Страховая компания Альбатрос</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Альбатрос — Застрахуй братуху!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #f0f4f8;
+            --surface: #ffffff;
+            --surface2: #f7fafc;
+            --border: #e2e8f0;
+            --border2: #cbd5e0;
+            --primary: #1a56db;
+            --primary-dark: #1341a8;
+            --primary-light: #ebf0ff;
+            --accent: #0ea5e9;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+            --text: #1a202c;
+            --text2: #4a5568;
+            --text3: #718096;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Geologica', sans-serif;
+            --radius: 10px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        body.dark {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #141720;
+            --border: #2a2d3e;
+            --border2: #363a50;
+            --primary: #4f7ef5;
+            --primary-dark: #3a6ae0;
+            --primary-light: #1a2450;
+            --text: #e8ecf4;
+            --text2: #a0a8bf;
+            --text3: #616880;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* ── THEME TOGGLE ── */
+        .theme-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+            .theme-toggle:hover {
+                background: var(--border);
+            }
+
         * {
             margin: 0;
             padding: 0;
@@ -11,693 +74,1700 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 14px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .header {
-            background: linear-gradient(135deg, #1a3c5e, #2980b9);
-            color: white;
-            padding: 20px 40px;
+        /* ── TOPBAR ── */
+        .topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            height: 56px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            padding: 0 24px;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
         }
 
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .header span {
-                font-size: 40px;
-            }
-
-        .nav {
-            background: #1a3c5e;
+        .logo {
             display: flex;
-            gap: 5px;
-            padding: 0 40px;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
         }
 
-            .nav button {
-                background: none;
-                border: none;
-                color: #adc8e6;
-                padding: 12px 20px;
-                cursor: pointer;
-                font-size: 14px;
-                border-bottom: 3px solid transparent;
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .logo-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 400;
+            margin-top: 1px;
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-time {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .topbar-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #a7f3d0;
+        }
+
+            .topbar-badge::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--green);
+                animation: blink 2s infinite;
             }
 
-                .nav button:hover, .nav button.active {
-                    color: white;
-                    border-bottom: 3px solid #2980b9;
-                }
-
-        .container {
-            padding: 30px 40px;
+        @keyframes blink {
+            50% {
+                opacity: 0.3;
+            }
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
+        /* ── LAYOUT ── */
+        .layout {
+            display: flex;
+            flex: 1;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 230px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 16px 0;
+            flex-shrink: 0;
+            position: sticky;
+            top: 56px;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+
+        .nav-group {
+            margin-bottom: 4px;
+            padding: 0 12px;
+        }
+
+        .nav-group-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text3);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 8px 8px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text2);
+            transition: all 0.15s;
+            user-select: none;
+            margin-bottom: 1px;
+        }
+
+            .nav-item:hover {
+                background: var(--bg);
+                color: var(--text);
+            }
+
+            .nav-item.active {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+
+        .nav-icon {
+            font-size: 15px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-count {
+            margin-left: auto;
+            background: var(--border);
+            color: var(--text3);
+            font-size: 10px;
+            font-family: var(--mono);
+            padding: 1px 6px;
             border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .nav-item.active .nav-count {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ── MAIN ── */
+        .main {
+            flex: 1;
+            padding: 24px 28px;
+            min-width: 0;
+        }
+
+        .section {
+            display: none;
+        }
+
+            .section.active {
+                display: block;
+            }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 20px;
         }
 
-            .card h2 {
-                color: #1a3c5e;
-                margin-bottom: 20px;
-                font-size: 18px;
-                border-bottom: 2px solid #2980b9;
-                padding-bottom: 10px;
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .page-sub {
+            font-size: 13px;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 7px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.1px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+            .btn-primary:hover {
+                background: var(--primary-dark);
+                box-shadow: 0 0 0 3px rgba(26,86,219,0.2);
             }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text2);
+            border: 1px solid var(--border2);
+        }
+
+            .btn-outline:hover {
+                background: var(--bg);
+                border-color: var(--text3);
+            }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--red);
+            border: 1px solid #fecaca;
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+            .btn-danger:hover {
+                background: #fef2f2;
+                border-color: var(--red);
+            }
+
+        /* ── STATS GRID ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-icon {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .stat-num {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 4px;
+        }
+
+        .stat-card.blue {
+            border-top: 3px solid var(--primary);
+        }
+
+        .stat-card.teal {
+            border-top: 3px solid var(--accent);
+        }
+
+        .stat-card.green {
+            border-top: 3px solid var(--green);
+        }
+
+        .stat-card.amber {
+            border-top: 3px solid var(--amber);
+        }
+
+        /* ── TABLE ── */
+        .table-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
 
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th {
-            background: #1a3c5e;
-            color: white;
-            padding: 12px;
+        thead th {
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             text-align: left;
-            font-size: 13px;
         }
 
-        td {
-            padding: 11px 12px;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
+        tbody td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-size: 13.5px;
         }
 
-        tr:hover {
-            background: #f0f7ff;
+        tbody tr:last-child td {
+            border-bottom: none;
         }
 
-        .form-row {
+        tbody tr:hover td {
+            background: var(--bg);
+        }
+
+        .td-id {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .td-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .empty-row td {
+            text-align: center;
+            padding: 48px;
+            color: var(--text3);
+            font-size: 14px;
+        }
+
+        /* ── MODAL ── */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .modal-backdrop.open {
+                display: flex;
+            }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 14px;
+            width: 480px;
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalIn 0.2s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: scale(0.96) translateY(8px);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px 24px 0;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
+            align-items: center;
+            justify-content: space-between;
         }
 
-            .form-row input, .form-row select {
-                padding: 9px 12px;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-                font-size: 13px;
-                flex: 1;
-                min-width: 150px;
-            }
+        .modal-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+        }
 
-        .btn {
-            background: #2980b9;
-            color: white;
-            border: none;
-            padding: 9px 20px;
+        .modal-close {
+            width: 28px;
+            height: 28px;
             border-radius: 6px;
+            background: var(--bg);
+            border: none;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
         }
 
-            .btn:hover {
-                background: #1a3c5e;
+            .modal-close:hover {
+                background: var(--border);
+                color: var(--text);
             }
 
-        .btn-red {
-            background: #e74c3c;
+        .modal-body {
+            padding: 20px 24px;
         }
 
-            .btn-red:hover {
-                background: #c0392b;
-            }
-
-        .btn-green {
-            background: #27ae60;
+        .modal-footer {
+            padding: 0 24px 20px;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
         }
 
-        .salary-box {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+        /* ── FORM ── */
+        .form-group {
+            margin-bottom: 14px;
         }
 
-            .salary-box h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-family: var(--sans);
+            font-size: 13.5px;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+            input:focus, select:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
             }
 
-            .salary-box p {
-                font-size: 28px;
-                font-weight: bold;
+            select option {
+                background: var(--surface);
             }
 
-        .page {
+        /* ── SALARY ── */
+        .salary-wrap {
+            max-width: 560px;
+        }
+
+        .salary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .salary-result {
+            margin-top: 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
             display: none;
         }
 
-            .page.active {
+            .salary-result.visible {
                 display: block;
             }
 
-        .stats {
+        .salary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13.5px;
+        }
+
+            .salary-row:last-child {
+                border-bottom: none;
+            }
+
+            .salary-row.total {
+                background: var(--primary-light);
+                font-weight: 700;
+                font-size: 15px;
+                color: var(--primary);
+            }
+
+        .salary-label {
+            color: var(--text2);
+        }
+
+        .salary-value {
+            font-family: var(--mono);
+            font-weight: 600;
+        }
+
+        /* ── ALERT ── */
+        .alert {
+            position: fixed;
+            top: 68px;
+            right: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--red);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--text);
+            z-index: 9000;
+            max-width: 340px;
+            display: none;
+            box-shadow: var(--shadow-md);
+            animation: slideIn 0.2s ease;
+        }
+
+            .alert.success {
+                border-left-color: var(--green);
+            }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(16px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ── SEPARATOR ── */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        /* ── DASHBOARD RECENT ── */
+        .dash-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        .stat-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border-top: 4px solid #2980b9;
+        .dash-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
 
-            .stat-card .number {
-                font-size: 32px;
-                font-weight: bold;
-                color: #1a3c5e;
+        .dash-card-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dash-list {
+            padding: 8px 0;
+        }
+
+        .dash-list-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            font-size: 13px;
+        }
+
+            .dash-list-item:hover {
+                background: var(--bg);
             }
 
-            .stat-card .label {
-                font-size: 13px;
-                color: #777;
-                margin-top: 5px;
-            }
+        .dash-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .dash-item-name {
+            flex: 1;
+            color: var(--text);
+        }
+
+        .dash-item-sub {
+            font-size: 11px;
+            color: var(--text3);
+            font-family: var(--mono);
+        }
+
+        .scroll-table {
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <span>🦅</span>
-        <div>
-            <h1>Страховая компания «Альбатрос»</h1>
-            <small>🦅🛡️ Застрахуй братуху! 😎✅</small>
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="logo">
+            <div class="logo-mark" style="background:none;padding:0;">
+                <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="64" height="64" rx="10" fill="#1a56db" />
+                    <path d="M12,44 C18,28 28,20 32,18 C36,20 46,28 52,44" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                    <path d="M22,44 C26,34 30,28 32,26 C34,28 38,34 42,44" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M8,40 Q20,30 32,32 Q44,30 56,40" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+                    <circle cx="32" cy="50" r="3" fill="#0ea5e9" />
+                    <path d="M10,54 C18,48 26,52 32,50 C38,52 46,48 54,54" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+                </svg>
+            </div>
+            <div>
+                <div class="logo-name">Альбатрос</div>
+                <div class="logo-tagline">Застрахуй братуху!</div>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-badge">API онлайн</div>
+            <div class="topbar-time" id="hTime"></div>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Сменить тему">🌙</button>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <div class="nav-group">
+                <div class="nav-group-label">Главная</div>
+                <div class="nav-item active" onclick="showSection('dashboard', this)">
+                    <span class="nav-icon">🏠</span> Главная панель
+                </div>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-label">Данные</div>
+                <div class="nav-item" onclick="showSection('clients', this)">
+                    <span class="nav-icon">👤</span> Клиенты
+                    <span class="nav-count" id="nc-clients">—</span>
+                </div>
+                <div class="nav-item" onclick="showSection('agents', this)">
+                    <span class="nav-icon">👔</span> Агенты
+                    <span class="nav-count" id="nc-agents">—</span>
+                </div>
+                <div class="nav-item" onclick="showSection('contracts', this)">
+                    <span class="nav-icon">📄</span> Договоры
+                    <span class="nav-count" id="nc-contracts">—</span>
+                </div>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-label">Справочники</div>
+                <div class="nav-item" onclick="showSection('insurance', this)">
+                    <span class="nav-icon">🛡️</span> Виды страхования
+                </div>
+                <div class="nav-item" onclick="showSection('branches', this)">
+                    <span class="nav-icon">🏢</span> Филиалы
+                    <span class="nav-count" id="nc-branches">—</span>
+                </div>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-label">Финансы</div>
+                <div class="nav-item" onclick="showSection('salary', this)">
+                    <span class="nav-icon">💰</span> Зарплата агентов
+                </div>
+            </div>
+        </nav>
+
+        <!-- MAIN -->
+        <main class="main">
+
+            <!-- ═══ DASHBOARD ═══ -->
+            <div id="dashboard" class="section active">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Главная панель</div>
+                        <div class="page-sub" id="dashDate"></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">👤</div>
+                        <div class="stat-num" id="statClients">—</div>
+                        <div class="stat-label">Клиентов</div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-icon">👔</div>
+                        <div class="stat-num" id="statAgents">—</div>
+                        <div class="stat-label">Агентов</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">📄</div>
+                        <div class="stat-num" id="statContracts">—</div>
+                        <div class="stat-label">Договоров</div>
+                    </div>
+                    <div class="stat-card amber">
+                        <div class="stat-icon">🏢</div>
+                        <div class="stat-num" id="statBranches">—</div>
+                        <div class="stat-label">Филиалов</div>
+                    </div>
+                </div>
+                <div class="dash-grid">
+                    <div class="dash-card">
+                        <div class="dash-card-header">📄 Последние договоры</div>
+                        <div class="dash-list" id="dashContracts"><div style="padding:20px;color:var(--text3);font-size:13px">Загрузка...</div></div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-header">👤 Последние клиенты</div>
+                        <div class="dash-list" id="dashClients"><div style="padding:20px;color:var(--text3);font-size:13px">Загрузка...</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ CLIENTS ═══ -->
+            <div id="clients" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Клиенты</div>
+                        <div class="page-sub" id="clientsCount">Загрузка...</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addClientModal')">+ Добавить клиента</button>
+                </div>
+                <div class="table-card scroll-table">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>ФИО</th><th>Телефон</th><th>Email</th><th>Адрес</th><th></th></tr>
+                        </thead>
+                        <tbody id="clientsTable">
+                            <tr class="empty-row"><td colspan="6">Загрузка данных...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ AGENTS ═══ -->
+            <div id="agents" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Агенты</div>
+                        <div class="page-sub" id="agentsCount">Загрузка...</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addAgentModal')">+ Добавить агента</button>
+                </div>
+                <div class="table-card scroll-table">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>ФИО</th><th>Телефон</th><th>Email</th><th>Базовая ставка</th><th>Филиал</th><th></th></tr>
+                        </thead>
+                        <tbody id="agentsTable">
+                            <tr class="empty-row"><td colspan="7">Загрузка данных...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ CONTRACTS ═══ -->
+            <div id="contracts" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Договоры</div>
+                        <div class="page-sub" id="contractsCount">Загрузка...</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addContractModal')">+ Новый договор</button>
+                </div>
+                <div class="table-card scroll-table">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>Клиент</th><th>Агент</th><th>Вид страхования</th><th>Сумма</th><th>Дата начала</th><th>Дата оконч.</th><th>Филиал</th><th></th></tr>
+                        </thead>
+                        <tbody id="contractsTable">
+                            <tr class="empty-row"><td colspan="9">Загрузка данных...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ INSURANCE ═══ -->
+            <div id="insurance" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Виды страхования</div>
+                        <div class="page-sub" id="insuranceCount">Загрузка...</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addInsuranceModal')">+ Добавить вид</button>
+                </div>
+                <div class="table-card scroll-table">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>Название</th><th>Описание</th><th></th></tr>
+                        </thead>
+                        <tbody id="insuranceTable">
+                            <tr class="empty-row"><td colspan="4">Загрузка данных...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ BRANCHES ═══ -->
+            <div id="branches" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Филиалы</div>
+                        <div class="page-sub" id="branchesCount">Загрузка...</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('addBranchModal')">+ Добавить филиал</button>
+                </div>
+                <div class="table-card scroll-table">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>Название</th><th>Город</th><th>Адрес</th><th>Телефон</th><th></th></tr>
+                        </thead>
+                        <tbody id="branchesTable">
+                            <tr class="empty-row"><td colspan="6">Загрузка данных...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ SALARY ═══ -->
+            <div id="salary" class="section">
+                <div class="page-header">
+                    <div>
+                        <div class="page-title">Расчёт зарплаты</div>
+                        <div class="page-sub">Расчёт вознаграждения агентов за выбранный период</div>
+                    </div>
+                </div>
+                <div class="salary-wrap">
+                    <div class="salary-card">
+                        <div class="form-group">
+                            <label>Агент</label>
+                            <select id="salaryAgent">
+                                <option value="">— Выберите агента —</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Месяц расчёта</label>
+                            <input type="month" id="salaryMonth">
+                        </div>
+                        <button class="btn btn-primary" onclick="calcSalary()" style="width:100%;justify-content:center">Рассчитать зарплату</button>
+                        <div class="salary-result" id="salaryResult">
+                            <div class="salary-row"><span class="salary-label">Агент</span><span class="salary-value" id="srName">—</span></div>
+                            <div class="salary-row"><span class="salary-label">Договоров за период</span><span class="salary-value" id="srContracts">—</span></div>
+                            <div class="salary-row"><span class="salary-label">Общая сумма договоров</span><span class="salary-value" id="srTotal">—</span></div>
+                            <div class="salary-row"><span class="salary-label">Базовая ставка</span><span class="salary-value" id="srRate">—</span></div>
+                            <div class="salary-row"><span class="salary-label">Комиссия (10%)</span><span class="salary-value" id="srComm">—</span></div>
+                            <div class="salary-row total"><span class="salary-label">ИТОГО К ВЫПЛАТЕ</span><span class="salary-value" id="srFinal">—</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ALERT -->
+    <div class="alert" id="alertBox"></div>
+
+    <!-- ═══════════════════════ MODALS ═══════════════════════ -->
+    <!-- CLIENT -->
+    <div class="modal-backdrop" id="addClientModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Новый клиент</span>
+                <button class="modal-close" onclick="closeModal('addClientModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>ФИО</label><input type="text" id="cFullName" placeholder="Иванов Иван Иванович"></div>
+                <div class="form-group"><label>Телефон</label><input type="text" id="cPhone" placeholder="+7 777 000-00-00"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="cEmail" placeholder="ivan@mail.ru"></div>
+                <div class="form-group"><label>Адрес</label><input type="text" id="cAddress" placeholder="г. Астана, ул. Примерная 1"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addClientModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="addClient()">Сохранить</button>
+            </div>
         </div>
     </div>
 
-    <div class="nav">
-        <button class="active" onclick="showPage('home')">🏠 Главная</button>
-        <button onclick="showPage('clients')">👥 Клиенты</button>
-        <button onclick="showPage('agents')">👔 Агенты</button>
-        <button onclick="showPage('branches')">🏢 Филиалы</button>
-        <button onclick="showPage('types')">📋 Виды страхования</button>
-        <button onclick="showPage('contracts')">📄 Договоры</button>
-        <button onclick="showPage('salary')">💰 Зарплата</button>
+    <!-- AGENT -->
+    <div class="modal-backdrop" id="addAgentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Новый агент</span>
+                <button class="modal-close" onclick="closeModal('addAgentModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>ФИО</label><input type="text" id="aFullName" placeholder="Петров Пётр Петрович"></div>
+                <div class="form-group"><label>Телефон</label><input type="text" id="aPhone" placeholder="+7 777 000-00-00"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="aEmail" placeholder="petr@albatros.kz"></div>
+                <div class="form-group"><label>Базовая ставка (₸)</label><input type="number" id="aRate" placeholder="50000"></div>
+                <div class="form-group"><label>Филиал</label><select id="aBranch"><option value="">— Выберите —</option></select></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addAgentModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="addAgent()">Сохранить</button>
+            </div>
+        </div>
     </div>
 
-    <div class="container">
-
-        <!-- ГЛАВНАЯ -->
-        <div id="home" class="page active">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="number" id="stat-clients">0</div>
-                    <div class="label">Клиентов</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number" id="stat-agents">0</div>
-                    <div class="label">Агентов</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number" id="stat-contracts">0</div>
-                    <div class="label">Договоров</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number" id="stat-branches">0</div>
-                    <div class="label">Филиалов</div>
-                </div>
+    <!-- CONTRACT -->
+    <div class="modal-backdrop" id="addContractModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Новый договор</span>
+                <button class="modal-close" onclick="closeModal('addContractModal')">✕</button>
             </div>
-            <div class="card">
-                <h2>Последние договоры</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Дата</th>
-                            <th>Клиент</th>
-                            <th>Агент</th>
-                            <th>Вид страхования</th>
-                            <th>Сумма</th>
-                            <th>Платёж</th>
-                        </tr>
-                    </thead>
-                    <tbody id="home-contracts"></tbody>
-                </table>
+            <div class="modal-body">
+                <div class="form-group"><label>Клиент</label><select id="ctClient"><option value="">— Выберите —</option></select></div>
+                <div class="form-group"><label>Агент</label><select id="ctAgent"><option value="">— Выберите —</option></select></div>
+                <div class="form-group"><label>Вид страхования</label><select id="ctInsurance"><option value="">— Выберите —</option></select></div>
+                <div class="form-group"><label>Сумма договора (₸)</label><input type="number" id="ctAmount" placeholder="100000"></div>
+                <div class="form-group"><label>Дата начала</label><input type="date" id="ctStart"></div>
+                <div class="form-group"><label>Дата окончания</label><input type="date" id="ctEnd"></div>
+                <div class="form-group"><label>Филиал</label><select id="ctBranch"><option value="">— Выберите —</option></select></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addContractModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="addContract()">Сохранить</button>
             </div>
         </div>
+    </div>
 
-        <!-- КЛИЕНТЫ -->
-        <div id="clients" class="page">
-            <div class="card">
-                <h2>➕ Добавить клиента</h2>
-                <div class="form-row">
-                    <input id="c-last" placeholder="Фамилия">
-                    <input id="c-first" placeholder="Имя">
-                    <input id="c-mid" placeholder="Отчество">
-                    <input id="c-addr" placeholder="Адрес">
-                    <input id="c-phone" placeholder="Телефон">
-                    <button class="btn btn-green" onclick="addClient()">Добавить</button>
-                </div>
+    <!-- INSURANCE TYPE -->
+    <div class="modal-backdrop" id="addInsuranceModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Вид страхования</span>
+                <button class="modal-close" onclick="closeModal('addInsuranceModal')">✕</button>
             </div>
-            <div class="card">
-                <h2>👥 Список клиентов</h2>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Адрес</th><th>Телефон</th><th>Действие</th></tr>
-                    </thead>
-                    <tbody id="clients-table"></tbody>
-                </table>
+            <div class="modal-body">
+                <div class="form-group"><label>Название</label><input type="text" id="iName" placeholder="ОСАГО"></div>
+                <div class="form-group"><label>Описание</label><input type="text" id="iDesc" placeholder="Краткое описание"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addInsuranceModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="addInsurance()">Сохранить</button>
             </div>
         </div>
+    </div>
 
-        <!-- АГЕНТЫ -->
-        <div id="agents" class="page">
-            <div class="card">
-                <h2>➕ Добавить агента</h2>
-                <div class="form-row">
-                    <input id="a-last" placeholder="Фамилия">
-                    <input id="a-first" placeholder="Имя">
-                    <input id="a-mid" placeholder="Отчество">
-                    <input id="a-addr" placeholder="Адрес">
-                    <input id="a-phone" placeholder="Телефон">
-                    <select id="a-branch"><option value="">Филиал</option></select>
-                    <button class="btn btn-green" onclick="addAgent()">Добавить</button>
-                </div>
+    <!-- BRANCH -->
+    <div class="modal-backdrop" id="addBranchModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Новый филиал</span>
+                <button class="modal-close" onclick="closeModal('addBranchModal')">✕</button>
             </div>
-            <div class="card">
-                <h2>👔 Список агентов</h2>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Телефон</th><th>Филиал</th><th>Действие</th></tr>
-                    </thead>
-                    <tbody id="agents-table"></tbody>
-                </table>
+            <div class="modal-body">
+                <div class="form-group"><label>Название</label><input type="text" id="bName" placeholder="Астанинский филиал"></div>
+                <div class="form-group"><label>Город</label><input type="text" id="bCity" placeholder="Астана"></div>
+                <div class="form-group"><label>Адрес</label><input type="text" id="bAddress" placeholder="ул. Примерная 1"></div>
+                <div class="form-group"><label>Телефон</label><input type="text" id="bPhone" placeholder="+7 000 000-00-00"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addBranchModal')">Отмена</button>
+                <button class="btn btn-primary" onclick="addBranch()">Сохранить</button>
             </div>
         </div>
-
-        <!-- ФИЛИАЛЫ -->
-        <div id="branches" class="page">
-            <div class="card">
-                <h2>➕ Добавить филиал</h2>
-                <div class="form-row">
-                    <input id="b-name" placeholder="Название">
-                    <input id="b-addr" placeholder="Адрес">
-                    <input id="b-phone" placeholder="Телефон">
-                    <button class="btn btn-green" onclick="addBranch()">Добавить</button>
-                </div>
-            </div>
-            <div class="card">
-                <h2>🏢 Список филиалов</h2>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Название</th><th>Адрес</th><th>Телефон</th><th>Действие</th></tr>
-                    </thead>
-                    <tbody id="branches-table"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ВИДЫ СТРАХОВАНИЯ -->
-        <div id="types" class="page">
-            <div class="card">
-                <h2>➕ Добавить вид страхования</h2>
-                <div class="form-row">
-                    <input id="t-name" placeholder="Название">
-                    <input id="t-percent" placeholder="Процент зарплаты" type="number">
-                    <button class="btn btn-green" onclick="addType()">Добавить</button>
-                </div>
-            </div>
-            <div class="card">
-                <h2>📋 Виды страхования</h2>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Название</th><th>% зарплаты</th><th>Действие</th></tr>
-                    </thead>
-                    <tbody id="types-table"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ДОГОВОРЫ -->
-        <div id="contracts" class="page">
-            <div class="card">
-                <h2>➕ Добавить договор</h2>
-                <div class="form-row">
-                    <input id="con-date" type="date">
-                    <input id="con-sum" placeholder="Страховая сумма" type="number">
-                    <input id="con-rate" placeholder="Тарифная ставка" type="number" step="0.001">
-                    <select id="con-client"><option value="">Клиент</option></select>
-                    <select id="con-agent"><option value="">Агент</option></select>
-                    <select id="con-type"><option value="">Вид страхования</option></select>
-                    <select id="con-branch"><option value="">Филиал</option></select>
-                    <button class="btn btn-green" onclick="addContract()">Добавить</button>
-                </div>
-            </div>
-            <div class="card">
-                <h2>📄 Список договоров</h2>
-                <table>
-                    <thead>
-                        <tr><th>№</th><th>Дата</th><th>Клиент</th><th>Агент</th><th>Вид</th><th>Сумма</th><th>Ставка</th><th>Платёж</th><th>Действие</th></tr>
-                    </thead>
-                    <tbody id="contracts-table"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ЗАРПЛАТА -->
-        <div id="salary" class="page">
-            <div class="card">
-                <h2>💰 Расчёт зарплаты агентов</h2>
-                <div class="form-row">
-                    <select id="sal-agent"><option value="">Выберите агента</option></select>
-                    <button class="btn" onclick="calcSalary()">Рассчитать</button>
-                </div>
-                <div id="salary-result"></div>
-            </div>
-            <div class="card">
-                <h2>📊 Зарплата всех агентов</h2>
-                <table>
-                    <thead>
-                        <tr><th>Агент</th><th>Договоров</th><th>Сумма платежей</th><th>Зарплата</th></tr>
-                    </thead>
-                    <tbody id="salary-table"></tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
     <script>
-const API = 'https://localhost:7082/api';
-function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(name).classList.add('active');
-    event.target.classList.add('active');
-    loadPage(name);
+// ═══════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════
+const API = '/api';
+
+let allAgents    = [];
+let allClients   = [];
+let allBranches  = [];
+let allInsurance = [];
+let allContracts = [];
+
+// ═══════════════════════════════════════════════
+//  TIME
+// ═══════════════════════════════════════════════
+function updateTime() {
+  const now = new Date();
+  document.getElementById('hTime').textContent = now.toLocaleTimeString('ru-RU');
+  const dateEl = document.getElementById('dashDate');
+  if (dateEl) {
+    dateEl.textContent = now.toLocaleDateString('ru-RU', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  }
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+// ═══════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+
+  if (id === 'clients')   loadClients();
+  if (id === 'agents')    loadAgents();
+  if (id === 'contracts') loadContracts();
+  if (id === 'insurance') loadInsurance();
+  if (id === 'branches')  loadBranches();
+  if (id === 'salary')    loadSalaryAgents();
 }
 
-async function loadPage(name) {
-    if (name === 'home') loadHome();
-    if (name === 'clients') loadClients();
-    if (name === 'agents') loadAgents();
-    if (name === 'branches') loadBranches();
-    if (name === 'types') loadTypes();
-    if (name === 'contracts') loadContracts();
-    if (name === 'salary') loadSalary();
+// ═══════════════════════════════════════════════
+//  ALERT
+// ═══════════════════════════════════════════════
+function showAlert(msg, type) {
+  const el = document.getElementById('alertBox');
+  el.textContent = msg;
+  el.className = 'alert' + (type === 'success' ? ' success' : '');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 4000);
 }
 
-async function get(url) {
-    const r = await fetch(API + url);
-    return r.json();
+// ═══════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════
+function openModal(id) {
+  if (id === 'addContractModal') fillContractSelects();
+  if (id === 'addAgentModal')    fillBranchSelect('aBranch');
+  document.getElementById(id).classList.add('open');
 }
-
-async function post(url, data) {
-    const r = await fetch(API + url, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    });
-    return r.json();
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
 }
+document.querySelectorAll('.modal-backdrop').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
 
-async function del(url) {
-    const response = await fetch(API + url, { method: 'DELETE' });
-    if (!response.ok) {
-        const text = await response.text();
-        alert(text);
-        return false;
+// ═══════════════════════════════════════════════
+//  FETCH HELPER
+// ═══════════════════════════════════════════════
+async function apiFetch(url, opts = {}) {
+  try {
+    const r = await fetch(API + url, opts);
+    if (!r.ok) {
+      let msg = 'Ошибка сервера ' + r.status;
+      try { msg = await r.text() || msg; } catch(_) {}
+      showAlert(msg);
+      return null;
     }
-    return true;
+    return r;
+  } catch(e) {
+    showAlert('Нет соединения с сервером. Запустите проект в Visual Studio (F5).');
+    return null;
+  }
 }
 
-async function loadHome() {
-    const [clients, agents, contracts, branches] = await Promise.all([
-        get('/clients'), get('/agents'), get('/contracts'), get('/branches')
-    ]);
-    document.getElementById('stat-clients').textContent = clients.length;
-    document.getElementById('stat-agents').textContent = agents.length;
-    document.getElementById('stat-contracts').textContent = contracts.length;
-    document.getElementById('stat-branches').textContent = branches.length;
+// ═══════════════════════════════════════════════
+//  SELECT HELPER
+// ═══════════════════════════════════════════════
+function fillSelect(selId, arr, valKey, labelKey) {
+  const sel = document.getElementById(selId);
+  if (!sel) return;
+  sel.innerHTML = '<option value="">— Выберите —</option>' +
+    arr.map(i => `<option value="${i[valKey]}">${i[labelKey] || '—'}</option>`).join('');
+}
 
-    const tbody = document.getElementById('home-contracts');
-    tbody.innerHTML = contracts.slice(-5).reverse().map(c => `
-        <tr>
-            <td>${c.contractId ?? c.contract_id}</td>
-            <td>${(c.contractDate ?? c.contract_date)?.split('T')[0]}</td>
-            <td>${c.client ? (c.client.lastName ?? c.client.last_name) + ' ' + (c.client.firstName ?? c.client.first_name) : '-'}</td>
-            <td>${c.agent ? (c.agent.lastName ?? c.agent.last_name) + ' ' + (c.agent.firstName ?? c.agent.first_name) : '-'}</td>
-            <td>${c.insuranceType ? c.insuranceType.name : '-'}</td>
-            <td>${(c.insuranceSum ?? c.insurance_sum)?.toLocaleString()} ₸</td>
-            <td>${((c.insuranceSum ?? c.insurance_sum) * (c.tariffRate ?? c.tariff_rate))?.toLocaleString()} ₸</td>
-        </tr>`).join('');
-        }
+// ═══════════════════════════════════════════════
+//  NORMALIZERS
+//  БД хранит: last_name, first_name, middle_name
+//  API (ASP.NET) отдаёт camelCase или PascalCase
+//  Собираем fullName из частей если нет единого поля
+// ═══════════════════════════════════════════════
+function buildFullName(obj) {
+  // Единое поле (если API склеивает сам)
+  if (obj.fullName)  return obj.fullName;
+  if (obj.FullName)  return obj.FullName;
+  // Разбитые части — camelCase
+  const last   = obj.lastName   ?? obj.last_name   ?? '';
+  const first  = obj.firstName  ?? obj.first_name  ?? '';
+  const middle = obj.middleName ?? obj.middle_name ?? '';
+  // Разбитые части — PascalCase
+  const Last   = obj.LastName   ?? '';
+  const First  = obj.FirstName  ?? '';
+  const Middle = obj.MiddleName ?? '';
+  const parts = [last||Last, first||First, middle||Middle].filter(Boolean);
+  return parts.length ? parts.join(' ') : '—';
+}
+
+function normClient(c) {
+  return {
+    clientId: c.clientId  ?? c.ClientId  ?? c.client_id ?? c.id ?? c.Id,
+    fullName:  buildFullName(c),
+    phone:     c.phone     ?? c.Phone     ?? '',
+    email:     c.email     ?? c.Email     ?? '',
+    address:   c.address   ?? c.Address   ?? ''
+  };
+}
+function normAgent(a) {
+  return {
+    agentId:    a.agentId    ?? a.AgentId    ?? a.agent_id ?? a.id ?? a.Id,
+    fullName:   buildFullName(a),
+    phone:      a.phone      ?? a.Phone      ?? '',
+    email:      a.email      ?? a.Email      ?? '',
+   baseSalary: a.baseRate ?? a.BaseRate ?? a.base_rate ?? a.baseSalary ?? a.BaseSalary ?? a.base_salary ?? 0,
+    branchId:   a.branchId   ?? a.BranchId   ?? a.branch_id  ?? null
+  };
+}
+function normBranch(b) {
+  return {
+    branchId: b.branchId  ?? b.BranchId  ?? b.branch_id ?? b.id ?? b.Id,
+    name:     b.name      ?? b.Name      ?? '',
+    city:     b.city      ?? b.City      ?? '',
+    address:  b.address   ?? b.Address   ?? '',
+    phone:    b.phone     ?? b.Phone     ?? ''
+  };
+}
+function normInsurance(i) {
+  return {
+    insuranceTypeId: i.insuranceTypeId  ?? i.InsuranceTypeId  ?? i.insurance_type_id ?? i.id ?? i.Id,
+    name:            i.name             ?? i.Name             ?? '',
+    description:     i.description      ?? i.Description      ?? i.salaryPercent ?? i.salary_percent ?? ''
+  };
+}
+function normContract(c) {
+  return {
+    contractId:      c.contractId      ?? c.ContractId      ?? c.contract_id      ?? c.id ?? c.Id,
+    clientId:        c.clientId        ?? c.ClientId        ?? c.client_id        ?? null,
+    agentId:         c.agentId         ?? c.AgentId         ?? c.agent_id         ?? null,
+    insuranceTypeId: c.insuranceTypeId ?? c.InsuranceTypeId ?? c.insurance_type_id ?? null,
+    amount:          c.insuranceSum ?? c.InsuranceSum ?? c.insurance_sum ?? c.amount ?? c.Amount ?? 0,
+    startDate:       c.contractDate ?? c.ContractDate ?? c.contract_date ?? c.startDate ?? c.StartDate ?? null,
+    endDate:         c.endDate         ?? c.EndDate         ?? null,
+    branchId:        c.branchId        ?? c.BranchId        ?? c.branch_id    ?? null,
+    client:          c.client          ?? c.Client          ?? null,
+    agent:           c.agent           ?? c.Agent           ?? null,
+    insuranceType:   c.insuranceType   ?? c.InsuranceType   ?? null,
+    branch:          c.branch          ?? c.Branch          ?? null
+  };
+}
+
+// ═══════════════════════════════════════════════
+//  CLIENTS
+// ═══════════════════════════════════════════════
 async function loadClients() {
-    const data = await get('/clients');
-    document.getElementById('clients-table').innerHTML = data.map(c => `
-        <tr>
-            <td>${c.clientId}</td>
-            <td>${c.lastName}</td>
-            <td>${c.firstName}</td>
-            <td>${c.middleName || '-'}</td>
-            <td>${c.address || '-'}</td>
-            <td>${c.phone || '-'}</td>
-            <td><button class="btn btn-red" onclick="deleteClient(${c.clientId})">Удалить</button></td>
-        </tr>`).join('');
+  const r = await apiFetch('/clients');
+  if (!r) return;
+  allClients = (await r.json()).map(normClient);
+
+  const count = allClients.length;
+  document.getElementById('clientsCount').textContent = `Всего записей: ${count}`;
+  document.getElementById('statClients').textContent  = count;
+  const nc = document.getElementById('nc-clients');
+  if (nc) nc.textContent = count;
+
+  const tbody = document.getElementById('clientsTable');
+  if (!allClients.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Нет данных. Добавьте первого клиента.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allClients.map(c => `
+    <tr>
+      <td class="td-id">${c.clientId}</td>
+      <td>${c.fullName || '—'}</td>
+      <td>${c.phone   || '—'}</td>
+      <td>${c.email   || '—'}</td>
+      <td>${c.address || '—'}</td>
+      <td><button class="btn btn-danger" onclick="deleteClient(${c.clientId})">Удалить</button></td>
+    </tr>`).join('');
 }
 
 async function addClient() {
-    await post('/clients', {
-        lastName: document.getElementById('c-last').value,
-        firstName: document.getElementById('c-first').value,
-        middleName: document.getElementById('c-mid').value,
-        address: document.getElementById('c-addr').value,
-        phone: document.getElementById('c-phone').value
-    });
+  const fio     = document.getElementById('cFullName').value.trim();
+  const phone   = document.getElementById('cPhone').value.trim();
+  const email   = document.getElementById('cEmail').value.trim();
+  const address = document.getElementById('cAddress').value.trim();
+  if (!fio)     { showAlert('⚠️ Заполните поле ФИО');     return; }
+  if (!phone)   { showAlert('⚠️ Заполните поле Телефон'); return; }
+  if (!email)   { showAlert('⚠️ Заполните поле Email');   return; }
+  if (!address) { showAlert('⚠️ Заполните поле Адрес');   return; }
+  const parts = fio.split(' ');
+  const body = {
+    lastName:   parts[0] || '',
+    firstName:  parts[1] || '',
+    middleName: parts[2] || '',
+    phone:    phone,
+    email:    email,
+    address:  address
+  };
+  if (!body.lastName) { showAlert('⚠️ Заполните поле ФИО'); return; }
+  const r = await apiFetch('/clients', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (r) {
+    closeModal('addClientModal');
+    ['cFullName','cPhone','cEmail','cAddress'].forEach(id => document.getElementById(id).value = '');
     loadClients();
+    showAlert('Клиент добавлен', 'success');
+  }
 }
 
 async function deleteClient(id) {
-    await del('/clients/' + id);
-    loadClients();
+  if (!confirm('Удалить клиента?')) return;
+  const r = await apiFetch(`/clients/${id}`, { method: 'DELETE' });
+  if (r) { loadClients(); showAlert('Клиент удалён'); }
 }
 
-async function loadBranches() {
-    const data = await get('/branches');
-    document.getElementById('branches-table').innerHTML = data.map(b => `
-        <tr>
-            <td>${b.branchId}</td>
-            <td>${b.name}</td>
-            <td>${b.address}</td>
-            <td>${b.phone || '-'}</td>
-            <td><button class="btn btn-red" onclick="deleteBranch(${b.branchId})">Удалить</button></td>
-        </tr>`).join('');
-
-    const sel = document.getElementById('a-branch');
-    if (sel) sel.innerHTML = '<option value="">Филиал</option>' +
-        data.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
-
-    const sel2 = document.getElementById('con-branch');
-    if (sel2) sel2.innerHTML = '<option value="">Филиал</option>' +
-        data.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
-}
-
-async function addBranch() {
-    await post('/branches', {
-        name: document.getElementById('b-name').value,
-        address: document.getElementById('b-addr').value,
-        phone: document.getElementById('b-phone').value
-    });
-    loadBranches();
-}
-
-async function deleteBranch(id) {
-    await del('/branches/' + id);
-    loadBranches();
-}
-
+// ═══════════════════════════════════════════════
+//  AGENTS
+// ═══════════════════════════════════════════════
 async function loadAgents() {
-    const [agents, branches] = await Promise.all([get('/agents'), get('/branches')]);
+  const [ra, rb] = await Promise.all([apiFetch('/agents'), apiFetch('/branches')]);
+  if (!ra) return;
+  allAgents   = (await ra.json()).map(normAgent);
+  if (rb) allBranches = (await rb.json()).map(normBranch);
 
-    document.getElementById('agents-table').innerHTML = agents.map(a => `
-        <tr>
-            <td>${a.agentId}</td>
-            <td>${a.lastName}</td>
-            <td>${a.firstName}</td>
-            <td>${a.middleName || '-'}</td>
-            <td>${a.phone || '-'}</td>
-            <td>${a.branch ? a.branch.name : '-'}</td>
-            <td><button class="btn btn-red" onclick="deleteAgent(${a.agentId})">Удалить</button></td>
-        </tr>`).join('');
+  const count = allAgents.length;
+  document.getElementById('agentsCount').textContent = `Всего записей: ${count}`;
+  document.getElementById('statAgents').textContent  = count;
+  const nc = document.getElementById('nc-agents');
+  if (nc) nc.textContent = count;
 
-    const sel = document.getElementById('a-branch');
-    sel.innerHTML = '<option value="">Филиал</option>' +
-        branches.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
-
-    const sel2 = document.getElementById('con-agent');
-    if (sel2) sel2.innerHTML = '<option value="">Агент</option>' +
-        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
-
-    const sel3 = document.getElementById('sal-agent');
-    if (sel3) sel3.innerHTML = '<option value="">Выберите агента</option>' +
-        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+  const tbody = document.getElementById('agentsTable');
+  if (!allAgents.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Нет данных. Добавьте первого агента.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allAgents.map(a => {
+    const br = allBranches.find(b => b.branchId === a.branchId);
+    return `<tr>
+      <td class="td-id">${a.agentId}</td>
+      <td>${a.fullName    || '—'}</td>
+      <td>${a.phone       || '—'}</td>
+      <td>${a.email       || '—'}</td>
+      <td>${a.baseSalary  ? Number(a.baseSalary).toLocaleString('ru') + ' ₸' : '—'}</td>
+      <td>${br ? br.name  : (a.branchId || '—')}</td>
+      <td><button class="btn btn-danger" onclick="deleteAgent(${a.agentId})">Удалить</button></td>
+    </tr>`;
+  }).join('');
 }
 
 async function addAgent() {
-    await post('/agents', {
-        lastName: document.getElementById('a-last').value,
-        firstName: document.getElementById('a-first').value,
-        middleName: document.getElementById('a-mid').value,
-        address: document.getElementById('a-addr').value,
-        phone: document.getElementById('a-phone').value,
-        branchId: parseInt(document.getElementById('a-branch').value) || null
-    });
+  const fio   = document.getElementById('aFullName').value.trim();
+  const phone = document.getElementById('aPhone').value.trim();
+  const email = document.getElementById('aEmail').value.trim();
+  const rate  = document.getElementById('aRate').value.trim();
+  if (!fio)   { showAlert('⚠️ Заполните поле ФИО');            return; }
+  if (!phone) { showAlert('⚠️ Заполните поле Телефон');        return; }
+  if (!email) { showAlert('⚠️ Заполните поле Email');          return; }
+  if (!rate)  { showAlert('⚠️ Заполните поле Базовая ставка'); return; }
+  const parts = fio.split(' ');
+  const body = {
+    lastName:   parts[0] || '',
+    firstName:  parts[1] || '',
+    middleName: parts[2] || '',
+    phone:      phone,
+    email:      email,
+    baseRate:   parseFloat(rate) || 0,
+    branchId:   parseInt(document.getElementById('aBranch').value) || null
+  };
+  const r = await apiFetch('/agents', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (r) {
+    closeModal('addAgentModal');
     loadAgents();
+    showAlert('Агент добавлен', 'success');
+  }
 }
 
 async function deleteAgent(id) {
-    await del('/agents/' + id);
-    loadAgents();
+  if (!confirm('Удалить агента?')) return;
+  const r = await apiFetch(`/agents/${id}`, { method: 'DELETE' });
+  if (r) { loadAgents(); showAlert('Агент удалён'); }
 }
 
-async function loadTypes() {
-    const data = await get('/insurancetypes');
-    document.getElementById('types-table').innerHTML = data.map(t => `
-        <tr>
-            <td>${t.insuranceTypeId}</td>
-            <td>${t.name}</td>
-            <td>${t.salaryPercent}%</td>
-            <td><button class="btn btn-red" onclick="deleteType(${t.insuranceTypeId})">Удалить</button></td>
-        </tr>`).join('');
-
-    const sel = document.getElementById('con-type');
-    if (sel) sel.innerHTML = '<option value="">Вид страхования</option>' +
-        data.map(t => `<option value="${t.insuranceTypeId}">${t.name}</option>`).join('');
-}
-
-async function addType() {
-    await post('/insurancetypes', {
-        name: document.getElementById('t-name').value,
-        salaryPercent: parseFloat(document.getElementById('t-percent').value)
-    });
-    loadTypes();
-}
-
-async function deleteType(id) {
-    await del('/insurancetypes/' + id);
-    loadTypes();
-}
-
+// ═══════════════════════════════════════════════
+//  CONTRACTS
+// ═══════════════════════════════════════════════
 async function loadContracts() {
-    const [contracts, clients, agents, types, branches] = await Promise.all([
-        get('/contracts'), get('/clients'), get('/agents'),
-        get('/insurancetypes'), get('/branches')
-    ]);
+  const [r, rc, ra, ri, rb] = await Promise.all([
+    apiFetch('/contracts'),
+    apiFetch('/clients'),
+    apiFetch('/agents'),
+    apiFetch('/insurancetypes'),
+    apiFetch('/branches')
+  ]);
+  if (!r) return;
+  allContracts = (await r.json()).map(normContract);
+  if (rc) allClients   = (await rc.json()).map(normClient);
+  if (ra) allAgents    = (await ra.json()).map(normAgent);
+  if (ri) allInsurance = (await ri.json()).map(normInsurance);
+  if (rb) allBranches  = (await rb.json()).map(normBranch);
 
-    document.getElementById('contracts-table').innerHTML = contracts.map(c => `
-        <tr>
-            <td>${c.contractId}</td>
-            <td>${c.contractDate?.split('T')[0]}</td>
-            <td>${c.client ? c.client.lastName + ' ' + c.client.firstName : '-'}</td>
-            <td>${c.agent ? c.agent.lastName + ' ' + c.agent.firstName : '-'}</td>
-            <td>${c.insuranceType ? c.insuranceType.name : '-'}</td>
-            <td>${c.insuranceSum?.toLocaleString()} ₸</td>
-            <td>${c.tariffRate}</td>
-            <td>${(c.insuranceSum * c.tariffRate).toLocaleString()} ₸</td>
-            <td><button class="btn btn-red" onclick="deleteContract(${c.contractId})">Удалить</button></td>
-        </tr>`).join('');
+  const count = allContracts.length;
+  document.getElementById('contractsCount').textContent = `Всего записей: ${count}`;
+  document.getElementById('statContracts').textContent  = count;
+  const nc = document.getElementById('nc-contracts');
+  if (nc) nc.textContent = count;
 
-    document.getElementById('con-client').innerHTML = '<option value="">Клиент</option>' +
-        clients.map(c => `<option value="${c.clientId}">${c.lastName} ${c.firstName}</option>`).join('');
-    document.getElementById('con-agent').innerHTML = '<option value="">Агент</option>' +
-        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
-    document.getElementById('con-type').innerHTML = '<option value="">Вид страхования</option>' +
-        types.map(t => `<option value="${t.insuranceTypeId}">${t.name}</option>`).join('');
-    document.getElementById('con-branch').innerHTML = '<option value="">Филиал</option>' +
-        branches.map(b => `<option value="${b.branchId}">${b.name}</option>`).join('');
+  const tbody = document.getElementById('contractsTable');
+  if (!allContracts.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="9">Нет договоров. Добавьте первый.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allContracts.map(c => {
+    // Имена из вложенных объектов ИЛИ из глобальных массивов ИЛИ ID
+    const clientName = c.client?.fullName
+      || allClients.find(x => x.clientId === c.clientId)?.fullName
+      || c.clientId;
+    const agentName  = c.agent?.fullName
+      || allAgents.find(x => x.agentId === c.agentId)?.fullName
+      || c.agentId;
+    const insuName   = c.insuranceType?.name
+      || allInsurance.find(x => x.insuranceTypeId === c.insuranceTypeId)?.name
+      || c.insuranceTypeId;
+    const brName     = c.branch?.name
+      || allBranches.find(x => x.branchId === c.branchId)?.name
+      || c.branchId;
+
+    return `<tr>
+      <td class="td-id">${c.contractId}</td>
+      <td>${clientName}</td>
+      <td>${agentName}</td>
+      <td><span class="td-tag">${insuName}</span></td>
+      <td>${c.amount ? Number(c.amount).toLocaleString('ru') + ' ₸' : '—'}</td>
+      <td>${c.startDate ? c.startDate.split('T')[0] : '—'}</td>
+      <td>${c.endDate   ? c.endDate.split('T')[0]   : '—'}</td>
+      <td>${brName}</td>
+      <td><button class="btn btn-danger" onclick="deleteContract(${c.contractId})">Удалить</button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function fillContractSelects() {
+  const [rc, ra, ri, rb] = await Promise.all([
+    apiFetch('/clients'),
+    apiFetch('/agents'),
+    apiFetch('/insurancetypes'),
+    apiFetch('/branches')
+  ]);
+  if (rc) { allClients   = (await rc.json()).map(normClient);    fillSelect('ctClient',    allClients,   'clientId',        'fullName'); }
+  if (ra) { allAgents    = (await ra.json()).map(normAgent);     fillSelect('ctAgent',     allAgents,    'agentId',         'fullName'); }
+  if (ri) { allInsurance = (await ri.json()).map(normInsurance); fillSelect('ctInsurance', allInsurance, 'insuranceTypeId', 'name'); }
+  if (rb) { allBranches  = (await rb.json()).map(normBranch);    fillSelect('ctBranch',    allBranches,  'branchId',        'name'); }
 }
 
 async function addContract() {
-    await post('/contracts', {
-        contractDate: document.getElementById('con-date').value,
-        insuranceSum: parseFloat(document.getElementById('con-sum').value),
-        tariffRate: parseFloat(document.getElementById('con-rate').value),
-        clientId: parseInt(document.getElementById('con-client').value) || null,
-        agentId: parseInt(document.getElementById('con-agent').value) || null,
-        insuranceTypeId: parseInt(document.getElementById('con-type').value) || null,
-        branchId: parseInt(document.getElementById('con-branch').value) || null
-    });
+  const clientId  = parseInt(document.getElementById('ctClient').value);
+  const agentId   = parseInt(document.getElementById('ctAgent').value);
+  const insuId    = parseInt(document.getElementById('ctInsurance').value);
+  const amount    = document.getElementById('ctAmount').value.trim();
+  const startDate = document.getElementById('ctStart').value;
+  const endDate   = document.getElementById('ctEnd').value;
+  if (!clientId)  { showAlert('Выберите клиента');          return; }
+  if (!agentId)   { showAlert('Выберите агента');           return; }
+  if (!insuId)    { showAlert('Выберите вид страхования');  return; }
+  if (!amount)    { showAlert('Заполните поле Сумма');      return; }
+  if (!startDate) { showAlert('Заполните Дату начала');     return; }
+  if (!endDate)   { showAlert('Заполните Дату окончания');  return; }
+  const body = {
+    clientId:        clientId,
+    agentId:         agentId,
+    insuranceTypeId: insuId,
+    insuranceSum:    parseFloat(amount) || 0,
+    contractDate:    startDate,
+    endDate:         endDate,
+    branchId:        parseInt(document.getElementById('ctBranch').value) || null
+  };
+  const r = await apiFetch('/contracts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (r) {
+    closeModal('addContractModal');
     loadContracts();
+    showAlert('Договор добавлен! Зарплата агента обновится при расчёте.', 'success');
+  }
 }
 
 async function deleteContract(id) {
-    await del('/contracts/' + id);
-    loadContracts();
+  if (!confirm('Удалить договор?')) return;
+  const r = await apiFetch(`/contracts/${id}`, { method: 'DELETE' });
+  if (r) { loadContracts(); showAlert('Договор удалён'); }
 }
 
-async function loadSalary() {
-    const [agents, contracts, types] = await Promise.all([
-        get('/agents'), get('/contracts'), get('/insurancetypes')
-    ]);
+// ═══════════════════════════════════════════════
+//  INSURANCE TYPES
+// ═══════════════════════════════════════════════
+async function loadInsurance() {
+  const r = await apiFetch('/insurancetypes');
+  if (!r) return;
+  allInsurance = (await r.json()).map(normInsurance);
+  document.getElementById('insuranceCount').textContent = `Всего записей: ${allInsurance.length}`;
 
-    const sel = document.getElementById('sal-agent');
-    sel.innerHTML = '<option value="">Выберите агента</option>' +
-        agents.map(a => `<option value="${a.agentId}">${a.lastName} ${a.firstName}</option>`).join('');
+  const tbody = document.getElementById('insuranceTable');
+  if (!allInsurance.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Нет видов страхования.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allInsurance.map(i => `
+    <tr>
+      <td class="td-id">${i.insuranceTypeId}</td>
+      <td>${i.name        || '—'}</td>
+      <td>${i.description || '—'}</td>
+      <td><button class="btn btn-danger" onclick="deleteInsurance(${i.insuranceTypeId})">Удалить</button></td>
+    </tr>`).join('');
+}
 
-    const tbody = document.getElementById('salary-table');
-    tbody.innerHTML = agents.map(agent => {
-        const agentContracts = contracts.filter(c => c.agentId === agent.agentId);
-        let totalSalary = 0;
-        let totalPayment = 0;
-        agentContracts.forEach(c => {
-            const payment = c.insuranceSum * c.tariffRate;
-            const percent = c.insuranceType ? c.insuranceType.salaryPercent / 100 : 0;
-            totalPayment += payment;
-            totalSalary += payment * percent;
-        });
-        return `<tr>
-            <td>${agent.lastName} ${agent.firstName} ${agent.middleName || ''}</td>
-            <td>${agentContracts.length}</td>
-            <td>${totalPayment.toLocaleString()} ₸</td>
-            <td><b>${totalSalary.toLocaleString()} ₸</b></td>
-        </tr>`;
-    }).join('');
+async function addInsurance() {
+  const body = {
+    name:        document.getElementById('iName').value.trim(),
+    description: document.getElementById('iDesc').value.trim()
+  };
+  if (!body.name) { showAlert('Введите название'); return; }
+  const r = await apiFetch('/insurancetypes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (r) {
+    closeModal('addInsuranceModal');
+    document.getElementById('iName').value = '';
+    document.getElementById('iDesc').value = '';
+    loadInsurance();
+    showAlert('Вид страхования добавлен', 'success');
+  }
+}
+
+async function deleteInsurance(id) {
+  if (!confirm('Удалить вид страхования?')) return;
+  const r = await apiFetch(`/insurancetypes/${id}`, { method: 'DELETE' });
+  if (r) { loadInsurance(); showAlert('Удалено'); }
+}
+
+// ═══════════════════════════════════════════════
+//  BRANCHES
+// ═══════════════════════════════════════════════
+async function loadBranches() {
+  const r = await apiFetch('/branches');
+  if (!r) return;
+  allBranches = (await r.json()).map(normBranch);
+
+  const count = allBranches.length;
+  document.getElementById('branchesCount').textContent = `Всего записей: ${count}`;
+  document.getElementById('statBranches').textContent  = count;
+  const nc = document.getElementById('nc-branches');
+  if (nc) nc.textContent = count;
+
+  const tbody = document.getElementById('branchesTable');
+  if (!allBranches.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Нет филиалов.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allBranches.map(b => `
+    <tr>
+      <td class="td-id">${b.branchId}</td>
+      <td>${b.name    || '—'}</td>
+      <td>${b.city    || '—'}</td>
+      <td>${b.address || '—'}</td>
+      <td>${b.phone   || '—'}</td>
+      <td><button class="btn btn-danger" onclick="deleteBranch(${b.branchId})">Удалить</button></td>
+    </tr>`).join('');
+}
+
+async function fillBranchSelect(selId) {
+  const r = await apiFetch('/branches');
+  if (r) { allBranches = (await r.json()).map(normBranch); fillSelect(selId, allBranches, 'branchId', 'name'); }
+}
+
+async function addBranch() {
+  const name    = document.getElementById('bName').value.trim();
+  const city    = document.getElementById('bCity').value.trim();
+  const address = document.getElementById('bAddress').value.trim();
+  const phone   = document.getElementById('bPhone').value.trim();
+  if (!name)    { showAlert('Заполните поле Название');  return; }
+  if (!city)    { showAlert('Заполните поле Город');     return; }
+  if (!address) { showAlert('Заполните поле Адрес');     return; }
+  if (!phone)   { showAlert('Заполните поле Телефон');   return; }
+  const body = { name, city, address, phone };
+  const r = await apiFetch('/branches', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (r) {
+    closeModal('addBranchModal');
+    ['bName','bCity','bAddress','bPhone'].forEach(id => document.getElementById(id).value = '');
+    loadBranches();
+    showAlert('Филиал добавлен', 'success');
+  }
+}
+
+async function deleteBranch(id) {
+  if (!confirm('Удалить филиал?')) return;
+  const r = await apiFetch(`/branches/${id}`, { method: 'DELETE' });
+  if (r) { loadBranches(); showAlert('Филиал удалён'); }
+}
+
+// ═══════════════════════════════════════════════
+//  SALARY
+// ═══════════════════════════════════════════════
+async function loadSalaryAgents() {
+  const r = await apiFetch('/agents');
+  if (!r) return;
+  allAgents = (await r.json()).map(normAgent);
+  fillSelect('salaryAgent', allAgents, 'agentId', 'fullName');
+  const today = new Date();
+  document.getElementById('salaryMonth').value = today.toISOString().slice(0, 7);
 }
 
 async function calcSalary() {
-    const agentId = parseInt(document.getElementById('sal-agent').value);
-    if (!agentId) return;
+  const agentId = parseInt(document.getElementById('salaryAgent').value);
+  const month   = document.getElementById('salaryMonth').value;
+  if (!agentId) { showAlert('Выберите агента'); return; }
+  if (!month)   { showAlert('Выберите месяц');  return; }
 
-    const [contracts, agents] = await Promise.all([get('/contracts'), get('/agents')]);
-    const agent = agents.find(a => a.agentId === agentId);
-    const agentContracts = contracts.filter(c => c.agentId === agentId);
+  // Берём агента свежо с сервера (не из кеша)
+  const agentR = await apiFetch('/agents/' + agentId);
+  if (!agentR) return;
+  const agent = normAgent(await agentR.json());
 
-    let totalSalary = 0;
-    agentContracts.forEach(c => {
-        const payment = c.insuranceSum * c.tariffRate;
-        const percent = c.insuranceType ? c.insuranceType.salaryPercent / 100 : 0;
-        totalSalary += payment * percent;
-    });
+  // Берём договоры и нормализуем — так contractDate → startDate, insuranceSum → amount
+  const r = await apiFetch('/contracts');
+  if (!r) return;
+  const contracts = (await r.json()).map(normContract);
 
-    document.getElementById('salary-result').innerHTML = `
-        <div class="salary-box">
-            <h3>${agent.lastName} ${agent.firstName} ${agent.middleName || ''}</h3>
-            <p>${totalSalary.toLocaleString()} ₸</p>
-            <small>Договоров: ${agentContracts.length}</small>
-        </div>`;
+  const [y, m] = month.split('-').map(Number);
+  const monthContracts = contracts.filter(c => {
+    if (Number(c.agentId) !== agentId) return false;
+    if (!c.startDate) return false;
+    const d = new Date(c.startDate);
+    return d.getFullYear() === y && (d.getMonth() + 1) === m;
+  });
+
+  const totalAmount = monthContracts.reduce((s, c) => s + (Number(c.amount) || 0), 0);
+  const baseSalary  = agent.baseSalary || 0;
+  const commission  = Math.round(totalAmount * 0.10);
+  const final       = baseSalary + commission;
+
+  document.getElementById('srName').textContent      = agent.fullName || '—';
+  document.getElementById('srContracts').textContent = monthContracts.length;
+  document.getElementById('srTotal').textContent     = totalAmount.toLocaleString('ru') + ' ₸';
+  document.getElementById('srRate').textContent      = baseSalary.toLocaleString('ru')  + ' ₸';
+  document.getElementById('srComm').textContent      = commission.toLocaleString('ru')  + ' ₸';
+  document.getElementById('srFinal').textContent     = final.toLocaleString('ru')       + ' ₸';
+  document.getElementById('salaryResult').classList.add('visible');
 }
 
-loadHome();
+// ═══════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════
+async function loadDashboard() {
+  const [rc, ra, rct, rb] = await Promise.all([
+    apiFetch('/clients'),
+    apiFetch('/agents'),
+    apiFetch('/contracts'),
+    apiFetch('/branches')
+  ]);
+
+  if (rc) {
+    const d = (await rc.json()).map(normClient);
+    allClients = d;
+    document.getElementById('statClients').textContent = d.length;
+    const nc = document.getElementById('nc-clients');
+    if (nc) nc.textContent = d.length;
+
+    const dashClients = document.getElementById('dashClients');
+    const last = d.slice(-5).reverse();
+    dashClients.innerHTML = last.length
+      ? last.map(c => `
+        <div class="dash-list-item">
+          <span class="dash-dot"></span>
+          <span class="dash-item-name">${c.fullName || '—'}</span>
+          <span class="dash-item-sub">${c.phone || ''}</span>
+        </div>`).join('')
+      : '<div style="padding:16px;color:var(--text3);font-size:13px">Нет данных</div>';
+  }
+
+  if (ra) {
+    const d = (await ra.json()).map(normAgent);
+    allAgents = d;
+    document.getElementById('statAgents').textContent = d.length;
+    const nc = document.getElementById('nc-agents');
+    if (nc) nc.textContent = d.length;
+  }
+
+  if (rct) {
+    const d = (await rct.json()).map(normContract);
+    allContracts = d;
+    document.getElementById('statContracts').textContent = d.length;
+    const nc = document.getElementById('nc-contracts');
+    if (nc) nc.textContent = d.length;
+
+    const dashContracts = document.getElementById('dashContracts');
+    const last = d.slice(-5).reverse();
+    dashContracts.innerHTML = last.length
+      ? last.map(c => `
+        <div class="dash-list-item">
+          <span class="dash-dot" style="background:var(--green)"></span>
+          <span class="dash-item-name">Договор #${c.contractId}</span>
+          <span class="dash-item-sub">${c.amount ? Number(c.amount).toLocaleString('ru') + ' ₸' : '—'}</span>
+        </div>`).join('')
+      : '<div style="padding:16px;color:var(--text3);font-size:13px">Нет данных</div>';
+  }
+
+  if (rb) {
+    const d = (await rb.json()).map(normBranch);
+    allBranches = d;
+    document.getElementById('statBranches').textContent = d.length;
+    const nc = document.getElementById('nc-branches');
+    if (nc) nc.textContent = d.length;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  THEME
+// ═══════════════════════════════════════════════
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+(function() {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('themeBtn');
+      if (btn) btn.textContent = '☀️';
+    });
+  }
+})();
+
+// ═══ INIT ═══
+loadDashboard();
     </script>
 </body>
 </html>

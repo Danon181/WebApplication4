@@ -13,6 +13,9 @@ namespace WebApplication4.Models
         [Column("contract_date")]
         public DateTime ContractDate { get; set; }
 
+        [Column("end_date")]
+        public DateTime? EndDate { get; set; }
+
         [Column("insurance_sum")]
         public double InsuranceSum { get; set; }
 
